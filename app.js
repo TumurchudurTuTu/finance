@@ -21,7 +21,23 @@ var uiController = (function () {
   };
 })();
 // Sanhuutei ajillah controller
-var financeController = (function () {})();
+var financeController = (function () {
+  var Income = function(id, description, value) {
+    this.id = id;
+    this.description = description;
+    this.value = value;
+}
+  var Expense = function(id, description, value) {
+    this.id = id;
+    this.description = description;
+    this.value = value;
+}
+  var incomes = [];
+  var expenses = [];
+  
+  var totalIncome = 0;
+  var totalExpenses = 0;
+})();
 // Programmiin holbogch controller
 var appController = (function (uiController, financeController) {
   var ctrlAddItem = function () {
@@ -51,7 +67,7 @@ var appController = (function (uiController, financeController) {
   };
   return {
     init: function () {
-      console.log("Application started...");
+      console.log("Event listener connected...");
       setupEventListeners();
     },
   };
