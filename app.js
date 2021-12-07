@@ -18,6 +18,10 @@ var uiController = (function () {
     getDomStrings: function () {
       return DOMstrings;
     },
+    addListItem function (){
+
+    }
+
   };
 })();
 // Sanhuutei ajillah controller
