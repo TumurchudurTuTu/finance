@@ -5,6 +5,8 @@ var uiController = (function () {
     inputDescription: ".add__description",
     inputValue: ".add__value",
     addBtn: ".add__btn",
+    incomeList: ".income__list",
+    expenseList: ".expenses__list",
   };
 
   return {
@@ -18,14 +20,17 @@ var uiController = (function () {
     getDomStrings: function () {
       return DOMstrings;
     },
+   clearFields: function(){
+     return DOMstrings;
+   },
     addListItem: function (item, type){
     // Orlogo zarlagiin elementiig aguulsan html-iig beltgene
      var html, list;
      if(type === 'inc'){
-        list = '.income__list';
+        list = DOMstrings.incomeList;
         html = '<div class="item clearfix" id="income-%id%"><div class="item__description">$$DESCRIPTION$$</div><div class="right clearfix"><div class="item__value">$$VALUE$$</div><div class="item__delete"><button class="item__delete--btn"><i class="ion-ios-close-outline"></i></button></div></div></div>'
      } else {
-      list = '.expenses__list';
+      list = DOMstrings.expenseList;
       html = '<div class="item clearfix" id="expense-%id%"><div class="item__description">$$DESCRIPTION$$</div><div class="right clearfix"><div class="item__value">$$VALUE$$</div><div class="item__percentage">21%</div><div class="item__delete"><button class="item__delete--btn"><i class="ion-ios-close-outline"></i></button></div></div></div>'
      }
     // Ter html dotoroo orlogo zarlagiin utguudiig REPLACE ashiglaj oorchilj ogno
