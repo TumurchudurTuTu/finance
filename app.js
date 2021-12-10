@@ -18,8 +18,22 @@ var uiController = (function () {
     getDomStrings: function () {
       return DOMstrings;
     },
-    addListItem function (){
-
+    addListItem: function (item, type){
+    // Orlogo zarlagiin elementiig aguulsan html-iig beltgene
+     var html, list;
+     if(type === 'inc'){
+        list = '.income__list';
+        html = '<div class="item clearfix" id="income-%id%"><div class="item__description">$$DESCRIPTION$$</div><div class="right clearfix"><div class="item__value">$$VALUE$$</div><div class="item__delete"><button class="item__delete--btn"><i class="ion-ios-close-outline"></i></button></div></div></div>'
+     } else {
+      list = '.expenses__list';
+      html = '<div class="item clearfix" id="expense-%id%"><div class="item__description">$$DESCRIPTION$$</div><div class="right clearfix"><div class="item__value">$$VALUE$$</div><div class="item__percentage">21%</div><div class="item__delete"><button class="item__delete--btn"><i class="ion-ios-close-outline"></i></button></div></div></div>'
+     }
+    // Ter html dotoroo orlogo zarlagiin utguudiig REPLACE ashiglaj oorchilj ogno
+    html = html.replace('%id%', item.id);
+    html = html.replace('$$DESCRIPTION$$', item.description);
+    html = html.replace('$$VALUE$$', item.value);
+    // Beltgesen HTML-ee DOM ruu hiij ugnu
+    document.querySelector(list).insertAdjacentHTML('beforeend', html);
     }
 
   };
@@ -69,6 +83,8 @@ var financeController = (function() {
       }
 
       data.items[type].push(item);
+
+      return item;
     },
 
     seeData: function() {
@@ -82,9 +98,9 @@ var appController = (function (uiController, financeController) {
     // 1. Oruulah ogogdliig delgetsees olj avna.
     var input = uiController.getInput();
     // 2. Olj avsan ogogdluudee sanhuugiin controllert damjuulj tend hadgalana.
-    financeController.addItem(input.type, input.description, input.value);
+    var item =financeController.addItem(input.type, input.description, input.value);
     // 3. Olj avsan ogogdluudee web deeree tohiroh hesegt ni gargana.
-
+    uiController.addListItem(item, input.type);
     // 4. Tusviig tootsoolno.
 
     // 5. Etssiin uldegdel, tootsoog delgetsend gargana.
