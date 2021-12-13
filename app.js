@@ -14,14 +14,24 @@ var uiController = (function () {
       return {
         type: document.querySelector(DOMstrings.inputType).value,
         description: document.querySelector(DOMstrings.inputDescription).value,
-        value: document.querySelector(DOMstrings.inputValue).value,
+        value: parseInt( document.querySelector(DOMstrings.inputValue).value),
       };
     },
     getDomStrings: function () {
       return DOMstrings;
     },
    clearFields: function(){
-     return DOMstrings;
+     var fields = document.querySelectorAll(DOMstrings.inputDescription + ", " + DOMstrings.inputValue);
+    // Convert List to Array
+    var fieldsArr = Array.prototype.slice.call(fields);
+    fieldsArr.forEach(function(el, index, array){
+    el.value = "";
+    });
+
+    fieldsArr[0].focus();
+    // for(var i=0; i < fieldsArr.length; i++){
+    //   fieldsArr[i].value = "";
+    // }
    },
     addListItem: function (item, type){
     // Orlogo zarlagiin elementiig aguulsan html-iig beltgene
@@ -102,13 +112,17 @@ var appController = (function (uiController, financeController) {
   var ctrlAddItem = function () {
     // 1. Oruulah ogogdliig delgetsees olj avna.
     var input = uiController.getInput();
+    if(input.description !== "" && input.value !== ""){
     // 2. Olj avsan ogogdluudee sanhuugiin controllert damjuulj tend hadgalana.
     var item =financeController.addItem(input.type, input.description, input.value);
     // 3. Olj avsan ogogdluudee web deeree tohiroh hesegt ni gargana.
     uiController.addListItem(item, input.type);
+    uiController.clearFields();
     // 4. Tusviig tootsoolno.
 
     // 5. Etssiin uldegdel, tootsoog delgetsend gargana.
+    }
+    
   };
 
   var setupEventListeners = function () {
