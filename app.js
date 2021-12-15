@@ -7,6 +7,10 @@ var uiController = (function () {
     addBtn: ".add__btn",
     incomeList: ".income__list",
     expenseList: ".expenses__list",
+    tusuvLabel: ".budget__value",
+    incomeLabel: ".budget__income--value",
+    expeseLabel: ".budget__expenses--value",
+    percentageLabel: ".budget__expenses--percentage",
   };
 
   return {
@@ -33,6 +37,20 @@ var uiController = (function () {
     //   fieldsArr[i].value = "";
     // }
    },
+   tusviigUzuuleh: function(tusuv){
+   document.querySelector(DOMstrings.tusuvLabel).textContent = tusuv.tusuv;
+   document.querySelector(DOMstrings.incomeLabel).textContent = tusuv.totalInc;
+   document.querySelector(DOMstrings.expeseLabel).textContent = tusuv.totalExp;
+   if(tusuv.huvi !== 0){
+   document.querySelector(DOMstrings.percentageLabel).textContent = tusuv.huvi + "%";
+   }
+   else {
+    document.querySelector(DOMstrings.percentageLabel).textContent = tusuv.huvi;
+   }
+   
+   },
+
+
     addListItem: function (item, type){
     // Orlogo zarlagiin elementiig aguulsan html-iig beltgene
      var html, list;
@@ -155,6 +173,7 @@ var appController = (function (uiController, financeController) {
     // 5. Uldegdel.
     var tusuv = financeController.tusviigAvah();
     // 6. Tusuviin tootsoog delgetsend gargana.
+    uiController.tusviigUzuuleh(tusuv);
     console.log(tusuv);
     }
   };
@@ -175,6 +194,12 @@ var appController = (function (uiController, financeController) {
   return {
     init: function () {
       console.log("Event listener connected...");
+      uiController.tusviigUzuuleh({
+        tusuv: 0,
+        huvi: 0,
+        totalInc: 0,
+        totalExp: 0,
+      })
       setupEventListeners();
     },
   };
