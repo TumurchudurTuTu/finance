@@ -185,16 +185,20 @@ var appController = (function (uiController, financeController) {
     // 3. Olj avsan ogogdluudee web deeree tohiroh hesegt ni gargana.
     uiController.addListItem(item, input.type);
     uiController.clearFields();
+    // Tusviig shineer tootsoolood delgetsend uzuulne.
+    updateTusuv();
+    }
+  };
+   
+  var updateTusuv = function() {
     // 4. Tusviig tootsoolno.
     financeController.tusuvTootsooloh();
     // 5. Uldegdel.
     var tusuv = financeController.tusviigAvah();
     // 6. Tusuviin tootsoog delgetsend gargana.
     uiController.tusviigUzuuleh(tusuv);
-    console.log(tusuv);
-    }
-  };
-
+  },
+   
   var setupEventListeners = function () {
     var DOM = uiController.getDomStrings();
 
@@ -221,6 +225,7 @@ var appController = (function (uiController, financeController) {
       // 2. Delgets deerees ene elementiig ustgana.
       uiController.deleteListItem(id);
       // 3. Uldegdel tootsoog shinechilj haruulna.
+      updateTusuv();
      }
    
     })
