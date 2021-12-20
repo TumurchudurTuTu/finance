@@ -83,6 +83,7 @@ var financeController = (function() {
     this.id = id;
     this.description = description;
     this.value = value;
+    this.percentage = -1;
   };
 
   // private data
@@ -91,6 +92,16 @@ var financeController = (function() {
     this.description = description;
     this.value = value;
   };
+
+  Expense.prototype.calcPercentage = function(totalIncome){
+    if(totalIncome > 0)
+    this.percentage = math.round(this.value / totalIncome) * 100;
+    else this.percentage = 0; 
+  };
+
+  Expense.prototype.getPercentage = function(){
+    return this.percentage;
+  }
 
   var calculateTotal = function(type){
   var sum = 0;
@@ -127,7 +138,22 @@ var financeController = (function() {
     // Tusviig shineer tootsoolno
     data.tusuv = data.totals.inc - data.totals.exp;
     // Orlogo zarlagiin huviig tootsoolno
-    data.huvi = Math.round((data.totals.exp / data.totals.inc) * 100);
+    if(data.totals.inc > 0)
+      data.huvi = Math.round((data.totals.exp / data.totals.inc) * 100);
+    else data.huvi = 0;
+    },
+
+    calculatePercentages: function(){
+    data.items.exp.forEach(function(el){
+     el.calcPercentage(data.totals.inc);
+    })
+    },
+
+    getPercentages: function(){ 
+      var allPercentages = data.items.exp.map(function(el){
+        return el.getPercentage();
+      })
+      return allPercentages;
     },
 
     tusviigAvah: function(){
@@ -197,6 +223,12 @@ var appController = (function (uiController, financeController) {
     var tusuv = financeController.tusviigAvah();
     // 6. Tusuviin tootsoog delgetsend gargana.
     uiController.tusviigUzuuleh(tusuv);
+    // 7. Elementuudiin huviig tootsoolno.
+    financeController.calculatePercentages();
+    // 8. Elementuudiin huviig huleej avna. 
+    var allPercentages = financeController.getPercentages();
+    // 9. Edgeer huviig delgetsend gargana.
+    
   };
 
   var setupEventListeners = function () {
