@@ -12,7 +12,7 @@ var uiController = (function () {
     expeseLabel: ".budget__expenses--value",
     percentageLabel: ".budget__expenses--percentage",
     containerDiv: ".container",
-    expensePercentageLabel: ".item__percentage",
+    expensePercentageLabel: ".item__percentage"
   };
 
   var nodeListForeach = function(list, callback){
@@ -112,15 +112,15 @@ var financeController = (function() {
     this.value = value;
   };
 
-  Expense.prototype.calcPercentage = function(totalIncome){
-    if(totalIncome > 0)
-    this.percentage = math.round(this.value / totalIncome) * 100;
-    else this.percentage = 0; 
+  Expense.prototype.calcPercentage = function(totalIncome) {
+    if (totalIncome > 0)
+      this.percentage = Math.round((this.value / totalIncome) * 100);
+    else this.percentage = 0;
   };
 
-  Expense.prototype.getPercentage = function(){
+  Expense.prototype.getPercentage = function() {
     return this.percentage;
-  }
+  };
 
   var calculateTotal = function(type){
   var sum = 0;
@@ -247,7 +247,7 @@ var appController = (function (uiController, financeController) {
     // 8. Elementuudiin huviig huleej avna. 
     var allPercentages = financeController.getPercentages();
     // 9. Edgeer huviig delgetsend gargana.
-    
+    uiController.displayPercentages(allPercentages);
   };
 
   var setupEventListeners = function () {
